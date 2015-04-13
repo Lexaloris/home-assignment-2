@@ -229,8 +229,7 @@ class ToolBar(Component):
         WebDriverWait(self.driver,10, 1).until(
             EC.element_to_be_clickable((By.XPATH, element))).click()
 
-    def set_text_clicked(self, text):
-        self.driver.find_element_by_xpath(self.TEXT)
+    def set_text_clicked(self, text):        
         ActionChains(self.driver).send_keys(text).perform()
 
     @property

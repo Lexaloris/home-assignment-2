@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-import time
 import unittest
 import os
 
@@ -32,21 +30,18 @@ class DeleteTopicTest(unittest.TestCase):
         auth_form.set_password(PASSWORD)
         auth_form.submit()
 
-        user_name = auth_page.top_menu.get_username()
-        self.assertEqual(USERNAME, user_name)
+        auth_page.top_menu.get_username()
 
         create_page = CreatePage(self.driver)
         create_page.open()
-        self.create_form = create_page.form
-    
-    def additional_assert(self, tag):
-        topic_page = TopicPage(self.driver)
-        self.assertEqual(TEXT, topic_page.topic.get_text(tag))            
+        self.create_form = create_page.form            
 
     def tearDown(self):        
         blog_page = BlogPage(self.driver)
-        blog_page.topic.delete()
-        self.driver.quit()
+        try:
+            blog_page.topic.delete()
+        finally:
+            self.driver.quit()
 
     def test_create_topic_ok_after_create(self):
         self.create_form.set_all_fields(BLOG, TITLE, TEXT)
@@ -132,7 +127,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_h4()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_h5(self):
         tag = "/h5"
@@ -140,7 +136,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_h5()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_h6(self):
         tag = "/h6"
@@ -148,7 +145,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_h6()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_strong(self):
         tag = "/strong"
@@ -156,7 +154,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_strong()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_strong_with_ctrl_b(self):
         tag = "/strong"
@@ -165,7 +164,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_ctrl_key(key)
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_em(self):
         tag = "/em"
@@ -173,7 +173,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_em()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_em_with_ctrl_i(self):
         tag = "/em"
@@ -182,7 +183,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_ctrl_key(key)
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_s(self):
         tag = "/s"
@@ -190,7 +192,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_s()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_s_with_ctrl_s(self):
         tag = "/s"
@@ -199,7 +202,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_ctrl_key(key)
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_u(self):
         tag = "/u"
@@ -207,7 +211,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_u()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_u_with_ctrl_u(self):
         tag = "/u"
@@ -216,16 +221,19 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_ctrl_key(key)
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_blockquote(self):
         tag = "/blockquote"
+        close_tag = "</blockquote>"
         self.create_form.set_prepare_fields(BLOG, TITLE)
         self.create_form.toolbar.select_blockquote()
-        self.create_form.steps_left(len(tag)+2)
+        self.create_form.steps_left(len(close_tag))
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_code(self):
         tag = "/code"
@@ -233,7 +241,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_code()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_list_ul(self):
         tag = "/ul/li"
@@ -241,7 +250,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_list_ul()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_list_ol(self):
         tag = "/ol/li"
@@ -249,7 +259,8 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.toolbar.select_list_ol()
         self.create_form.set_text_clicked(TEXT)
         self.create_form.submit()
-        self.additional_assert(tag)
+        topic_page = TopicPage(self.driver)
+        self.assertEqual(TEXT, topic_page.topic.get_text(tag))
 
     def test_create_topic_img_pc(self):
         self.create_form.set_prepare_fields(BLOG, TITLE)
@@ -284,7 +295,7 @@ class DeleteTopicTest(unittest.TestCase):
         self.create_form.submit()
 
         topic_page = TopicPage(self.driver)
-        self.assertTrue(URL_ON_FTEST in topic_page.topic.get_image_atr("src"))
+        self.assertIn(URL_ON_FTEST, topic_page.topic.get_image_atr("src"))
 
     def test_create_topic_img_url_with_title(self):
         self.create_form.set_prepare_fields(BLOG, TITLE)

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-import time
 import unittest
 import os
 
@@ -30,8 +28,7 @@ class NoneCreateTopicTest(unittest.TestCase):
         auth_form.set_password(PASSWORD)
         auth_form.submit()
 
-        user_name = auth_page.top_menu.get_username()
-        self.assertEqual(USERNAME, user_name)
+        auth_page.top_menu.get_username()
 
         create_page = CreatePage(self.driver)
         create_page.open()
@@ -58,8 +55,7 @@ class NoneCreateTopicTest(unittest.TestCase):
     def test_preview_text(self):
         self.create_form.set_all_fields(BLOG, TITLE, TEXT)
         self.create_form.preview.open()
-        self.assertEqual(TEXT, self.create_form.preview.get_preview_text())
-        self.create_form.submit()
+        self.assertEqual(TEXT, self.create_form.preview.get_preview_text())        
 
     def test_create_topic_text_visiable(self):
         self.create_form.set_all_fields(BLOG, TITLE, TEXT)
