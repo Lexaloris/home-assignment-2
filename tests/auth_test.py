@@ -14,7 +14,7 @@ class AuthTest(unittest.TestCase):
         if browser == 'FIREFOX':
             self.driver = webdriver.Firefox()
         elif browser == 'CHROME':
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.Chrome("./chromedriver")
 
         auth_page = AuthPage(self.driver)
         auth_page.open()

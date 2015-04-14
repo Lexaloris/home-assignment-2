@@ -15,12 +15,12 @@ class DeleteTopicTest(unittest.TestCase):
 
     def setUp(self):
 
-        browser = os.environ.get('TTHA2BROWSER', 'CHROME')
+        self.browser = os.environ.get('TTHA2BROWSER', 'CHROME')
         
-        if browser == 'FIREFOX':
+        if self.browser == 'FIREFOX':
             self.driver = webdriver.Firefox()
-        elif browser == 'CHROME':
-            self.driver = webdriver.Chrome()
+        elif self.browser == 'CHROME':
+            self.driver = webdriver.Chrome("./chromedriver")
 
         auth_page = AuthPage(self.driver)
         auth_page.open()
@@ -348,9 +348,9 @@ class DeleteTopicTest(unittest.TestCase):
 
         topic_page = TopicPage(self.driver)
         self.assertIsNotNone(topic_page.topic.get_image_atr("src"))
-        if self.name == 'CHROME':
+        if self.browser == 'CHROME':
             self.assertEqual(u"center", topic_page.topic.get_image_atr("align"))
-        if self.name == 'FIREFOX':
+        if self.browser == 'FIREFOX':
             self.assertEqual(u"middle", topic_page.topic.get_image_atr("align"))
 
     def test_create_topic_with_link(self):

@@ -8,9 +8,7 @@ from  tests.auth_test import AuthTest
 
 
 if __name__ == '__main__':
-
-    print "Start test"
-
+    
     suite = unittest.TestSuite((
         unittest.makeSuite(AuthTest),
         unittest.makeSuite(NoneCreateTopicTest),
